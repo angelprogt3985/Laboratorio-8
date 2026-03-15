@@ -18,6 +18,7 @@ import { Button } from '@/components/ui/button';
 import type { Property } from '@/types/property';
 import { PROPERTY_TYPE_LABELS, OPERATION_TYPE_LABELS } from '@/types/property';
 import { formatPrice, formatArea, truncateText } from '@/lib/utils';
+import { CompareButton } from '@/components/CompareButton';
 
 /**
  * Props del componente PropertyCard.
@@ -25,6 +26,8 @@ import { formatPrice, formatArea, truncateText } from '@/lib/utils';
 interface PropertyCardProps {
   property: Property;
   onDelete?: (id: string) => void;
+  compareList?: string[];
+  onToggleCompare?: (id: string) => void;
 }
 
 /**
@@ -40,7 +43,7 @@ interface PropertyCardProps {
  * @param property - Datos de la propiedad
  * @param onDelete - Callback opcional para eliminar
  */
-export function PropertyCard({ property, onDelete }: PropertyCardProps): React.ReactElement {
+export function PropertyCard({ property, onDelete, compareList = [], onToggleCompare }: PropertyCardProps): React.ReactElement {
   // Uso de Optional Chaining (?.) y Nullish Coalescing (??)
   // 1. property.images?.[0] -> Si images es null/undefined, devuelve undefined sin lanzar error
   // 2. ?? -> Si lo anterior es null/undefined, usa el placeholder
@@ -48,7 +51,13 @@ export function PropertyCard({ property, onDelete }: PropertyCardProps): React.R
     property.images?.[0] ?? `https://placehold.co/800x600/e2e8f0/64748b?text=${encodeURIComponent(property.propertyType)}`;
 
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+    <Card className="overflow-hidden hover:shadow-lg transition-shadow">{onToggleCompare && (
+  <CompareButton
+    propertyId={property.id}
+    compareList={compareList}
+    onToggleCompare={onToggleCompare}
+  />
+)}
       {/* Imagen con badge */}
       <div className="relative h-48 overflow-hidden">
         <img
@@ -121,7 +130,13 @@ export function PropertyCard({ property, onDelete }: PropertyCardProps): React.R
         <Button asChild className="flex-1">
           <Link to={`/property/${property.id}`}>Ver detalles</Link>
         </Button>
-
+        {onToggleCompare && (
+          <CompareButton
+            propertyId={property.id}
+            compareList={compareList}
+            onToggleCompare={onToggleCompare}
+          />
+        )}
         {/* Botón eliminar (si se proporciona callback) */}
         {onDelete && (
           <Button
