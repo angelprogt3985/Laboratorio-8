@@ -19,6 +19,7 @@ import { HomePage } from '@/pages/HomePage';
 import { NewPropertyPage } from '@/pages/NewPropertyPage';
 import { PropertyDetailPage } from '@/pages/PropertyDetailPage';
 import { ComparePage } from '@/pages/ComparePage';
+import { useState } from 'react';
 
 /**
  * Componente principal de la aplicación.
@@ -29,6 +30,17 @@ import { ComparePage } from '@/pages/ComparePage';
  * - Footer con créditos
  */
 function App(): React.ReactElement {
+
+  const [compareList, setCompareList] = useState<string[]>([]);
+
+  const handleToggleCompare = (id: string): void => {
+    setCompareList((prev) =>
+      prev.includes(id)
+        ? prev.filter((x) => x !== id)
+        : prev.length < 3 ? [...prev, id] : prev
+    );
+  };
+  
   return (
     <>
       {/* Toaster para notificaciones - fuera del layout para evitar problemas de z-index */}
@@ -75,7 +87,7 @@ function App(): React.ReactElement {
         <main className="flex-1">
           <Routes>
             {/* Página principal - Lista de propiedades */}
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<HomePage compareList={compareList} onToggleCompare={handleToggleCompare} />} />
 
             {/* Página para crear nueva propiedad */}
             <Route path="/new" element={<NewPropertyPage />} />
@@ -83,7 +95,7 @@ function App(): React.ReactElement {
             {/* Página de detalle de propiedad */}
             <Route path="/property/:id" element={<PropertyDetailPage />} />
 
-            <Route path="/compare" element={<ComparePage compareList={[]} onToggleCompare={() => {}} />} />
+            <Route path="/compare" element={<ComparePage compareList={compareList} onToggleCompare={handleToggleCompare} />} />
 
 
             {/* Ruta 404 - Página no encontrada */}

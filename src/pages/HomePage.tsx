@@ -34,10 +34,16 @@ import {
   OPERATION_TYPE_LABELS,
 } from '@/types/property';
 
+
+
+interface HomePageProps {
+  compareList: string[];
+  onToggleCompare: (id: string) => void;
+}
 /**
  * Página principal con lista de propiedades y filtros.
  */
-export function HomePage(): React.ReactElement {
+export function HomePage({ compareList, onToggleCompare }: HomePageProps): React.ReactElement {
   // =========================================================================
   // ESTADO
   // =========================================================================
@@ -243,6 +249,8 @@ export function HomePage(): React.ReactElement {
               key={property.id}
               property={property}
               onDelete={handleDelete}
+              compareList={compareList}       
+              onToggleCompare={onToggleCompare} 
             />
           ))}
         </div>
