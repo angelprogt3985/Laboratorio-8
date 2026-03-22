@@ -30,7 +30,7 @@ export function ImageModal({
     if (!esElUltimo) alNavegar(indiceActual + 1);
   }
 
-  // Soporte de teclado
+
   useEffect(() => {
     function manejarTeclado(evento: KeyboardEvent): void {
       if (evento.key === 'ArrowLeft') irAnterior();
@@ -50,7 +50,6 @@ export function ImageModal({
         className="relative max-w-4xl w-full mx-4 flex flex-col items-center"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Botón cerrar */}
         <Button
           variant="ghost"
           size="icon"
@@ -61,12 +60,10 @@ export function ImageModal({
           <X className="h-7 w-7" />
         </Button>
 
-        {/* Contador */}
         <p className="text-white text-sm mb-3 font-medium">
           {indiceActual + 1} de {total}
         </p>
 
-        {/* Imagen + flechas */}
         <div className="relative w-full flex items-center">
           <Button
             variant="ghost"
