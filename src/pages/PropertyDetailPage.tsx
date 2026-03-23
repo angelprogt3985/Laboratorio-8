@@ -21,6 +21,7 @@ import {
   type Amenity,
 } from '@/types/property';
 import { formatPrice, formatArea } from '@/lib/utils';
+import { ImageGallery } from '@/components/ImageGallery';
 
 /**
  * Página de detalle de una propiedad.
@@ -97,16 +98,7 @@ export function PropertyDetailPage(): React.ReactElement {
 
           {/* Galería de imágenes adicionales */}
           {property.images.length > 1 && (
-            <div className="grid grid-cols-4 gap-2">
-              {property.images.slice(1).map((img, index) => (
-                <img
-                  key={index}
-                  src={img}
-                  alt={`${property.title} - Imagen ${index + 2}`}
-                  className="w-full h-24 object-cover rounded-lg"
-                />
-              ))}
-            </div>
+            <ImageGallery imagenes={property.images} prefijo={property.title} />
           )}
 
           {/* Descripción */}

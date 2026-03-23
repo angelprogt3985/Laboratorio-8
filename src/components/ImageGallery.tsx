@@ -1,7 +1,6 @@
 import type React from 'react';
 import { useState } from 'react';
-import { ImageModal } from './ImageModal';
-
+import { ImageModal } from '@/components/ImageModal';
 interface PropiedadesImageGallery {
   imagenes: string[];
   prefijo?: string;
