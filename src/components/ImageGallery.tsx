@@ -15,7 +15,7 @@ export function ImageGallery({ imagenes, prefijo = 'Propiedad' }: PropiedadesIma
     setIndiceSeleccionado(indice);
   }
 
-  function cerrarModal(): void {
+  function cerrarModal(): void { 
     setIndiceSeleccionado(null);
   }
 
